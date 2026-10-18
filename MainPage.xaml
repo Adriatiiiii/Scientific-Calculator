@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SiencCalculator.MainPage"
+             BackgroundColor="#0B0F14"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <Style x:Key="KeyButton" TargetType="Button">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="19" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="VerticalOptions" Value="Fill" />
+            <Setter Property="MinimumHeightRequest" Value="44" />
+        </Style>
+        <Style x:Key="NumberButton" TargetType="Button" BasedOn="{StaticResource KeyButton}">
+            <Setter Property="BackgroundColor" Value="#171D26" />
+            <Setter Property="TextColor" Value="#F2F5FA" />
+        </Style>
+        <Style x:Key="FunctionButton" TargetType="Button" BasedOn="{StaticResource KeyButton}">
+            <Setter Property="BackgroundColor" Value="#121820" />
+            <Setter Property="TextColor" Value="#64D8CB" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style x:Key="OperatorButton" TargetType="Button" BasedOn="{StaticResource KeyButton}">
+            <Setter Property="BackgroundColor" Value="#202936" />
+            <Setter Property="TextColor" Value="#7FD9CD" />
+        </Style>
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource KeyButton}">
+            <Setter Property="BackgroundColor" Value="#332027" />
+            <Setter Property="TextColor" Value="#FF9A9A" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style x:Key="EqualsButton" TargetType="Button" BasedOn="{StaticResource KeyButton}">
+            <Setter Property="BackgroundColor" Value="#53D6C5" />
+            <Setter Property="TextColor" Value="#081411" />
+            <Setter Property="FontSize" Value="23" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid Padding="22,18"
+          RowDefinitions="Auto,1.25*,Auto,4.1*"
+          RowSpacing="16"
+          HorizontalOptions="Center"
+          WidthRequest="480">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" VerticalOptions="Center">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="SCIENTIFIC"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="11"
+                       CharacterSpacing="2.2"
+                       TextColor="#64D8CB" />
+                <Label Text="Calculator"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="19"
+                       TextColor="#F2F5FA" />
+            </VerticalStackLayout>
+            <Button x:Name="EulerButton"
+                    Grid.Column="1"
+                    Text="e"
+                    Clicked="OnButtonPressed"
+                    WidthRequest="42"
+                    HeightRequest="40"
+                    CornerRadius="14"
+                    Padding="0"
+                    BackgroundColor="#121820"
+                    TextColor="#64D8CB"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="15"
+                    VerticalOptions="Center" />
+            <Button x:Name="AngleModeButton"
+                    Grid.Column="2"
+                    Text="DEG"
+                    Clicked="OnButtonPressed"
+                    CommandParameter="DEG"
+                    WidthRequest="66"
+                    HeightRequest="40"
+                    CornerRadius="14"
+                    Padding="0"
+                    BackgroundColor="#182820"
+                    TextColor="#70E2BC"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="13"
+                    VerticalOptions="Center" />
+        </Grid>
+
+        <Grid Grid.Row="1"
+              RowDefinitions="Auto,*"
+              RowSpacing="10"
+              VerticalOptions="End">
+            <Label x:Name="ExpressionLabel"
+                   Grid.Row="0"
+                   Text=" "
+                   FontSize="18"
+                   TextColor="#8793A4"
+                   HorizontalTextAlignment="End"
+                   LineBreakMode="HeadTruncation"
+                   MaxLines="1" />
+            <Label x:Name="ResultLabel"
+                   Grid.Row="1"
+                   Text="0"
+                   FontFamily="OpenSansSemibold"
+                   FontSize="54"
+                   TextColor="#F2F5FA"
+                   HorizontalTextAlignment="End"
+                   VerticalTextAlignment="End"
+                   LineBreakMode="HeadTruncation"
+                   MaxLines="1"
+                   SemanticProperties.HeadingLevel="Level1" />
+        </Grid>
+
+        <Grid Grid.Row="2" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*,*" ColumnSpacing="8" RowSpacing="8">
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="0" Grid.Column="0" Text="sin" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="0" Grid.Column="1" Text="cos" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="0" Grid.Column="2" Text="tan" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="0" Grid.Column="3" Text="ln" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="0" Grid.Column="4" Text="log" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="1" Grid.Column="0" Text="√" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="1" Grid.Column="1" Text="x²" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="1" Grid.Column="2" Text="xʸ" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="1" Grid.Column="3" Text="π" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="1" Grid.Column="4" Text="%" Clicked="OnButtonPressed" />
+        </Grid>
+
+        <Grid Grid.Row="3"
+              RowDefinitions="*,*,*,*,*,*"
+              ColumnDefinitions="*,*,*,*"
+              ColumnSpacing="9"
+              RowSpacing="9">
+            <Button Style="{StaticResource DangerButton}" Grid.Row="0" Grid.Column="0" Text="AC" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="0" Grid.Column="1" Text="⌫" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="0" Grid.Column="2" Text="(" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="0" Grid.Column="3" Text=")" Clicked="OnButtonPressed" />
+
+            <Button Style="{StaticResource NumberButton}" Grid.Row="1" Grid.Column="0" Text="7" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="1" Grid.Column="1" Text="8" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="1" Grid.Column="2" Text="9" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="1" Grid.Column="3" Text="÷" Clicked="OnButtonPressed" />
+
+            <Button Style="{StaticResource NumberButton}" Grid.Row="2" Grid.Column="0" Text="4" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="2" Grid.Column="1" Text="5" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="2" Grid.Column="2" Text="6" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="2" Grid.Column="3" Text="×" Clicked="OnButtonPressed" />
+
+            <Button Style="{StaticResource NumberButton}" Grid.Row="3" Grid.Column="0" Text="1" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="3" Grid.Column="1" Text="2" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="3" Grid.Column="2" Text="3" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="3" Grid.Column="3" Text="−" Clicked="OnButtonPressed" />
+
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="4" Grid.Column="0" Text="±" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="4" Grid.Column="1" Text="0" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource NumberButton}" Grid.Row="4" Grid.Column="2" Text="." Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="4" Grid.Column="3" Text="+" Clicked="OnButtonPressed" />
+
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="5" Grid.Column="0" Text="n!" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource FunctionButton}" Grid.Row="5" Grid.Column="1" Text="1/x" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource OperatorButton}" Grid.Row="5" Grid.Column="2" Text="^" Clicked="OnButtonPressed" />
+            <Button Style="{StaticResource EqualsButton}" Grid.Row="5" Grid.Column="3" Text="=" Clicked="OnButtonPressed" />
+        </Grid>
+    </Grid>
+</ContentPage>
